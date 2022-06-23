@@ -14,6 +14,8 @@ import com.giphy.gifdemo.database.models.FavoritesGifBean
 import com.giphy.gifdemo.databinding.ItemGifBinding
 import com.giphy.gifdemo.di.GlideApp
 import com.giphy.gifdemo.models.Data
+import com.giphy.gifdemo.utils.loadImagesWithGlideExtCrop
+import com.giphy.gifdemo.utils.loadImagesWithGlideExtFitCenter
 import javax.inject.Inject
 
 
@@ -39,15 +41,11 @@ class TrendingGifAdapter @Inject constructor(
             var url = getItem(position)?.images?.downsized?.url
             var height = getItem(position)?.images?.downsized?.height
             var width = getItem(position)?.images?.downsized?.width
-            binding.apply {
-                itemGifFile.setDimensions(height?:0,width?:0)
-                GlideApp.with(root)
-                    .asGif()
-                    .load(url)
-                    .fitCenter()
-                    .placeholder(R.drawable.ic_place_holder)
-                    .into(itemGifFile)
+
+            url?.let {
+                binding.itemGifFile.loadImagesWithGlideExtFitCenter(url)
             }
+            binding.itemGifFile.setDimensions(height?:0,width?:0)
 
             getItem(position)?.id?.let { giphyUrlId ->
                 var isInFavorite = getItem(position)?.id?.let { appDatabase.getFavoriteData().checkIsFavorite(id = it) }

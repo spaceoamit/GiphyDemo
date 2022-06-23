@@ -8,6 +8,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.giphy.gifdemo.R
+import com.giphy.gifdemo.di.GlideApp
+import com.giphy.gifdemo.ui.view.GifImageView
 
 /**
  * @Author: Amit Patoliya
@@ -31,6 +35,30 @@ fun View.visibleIf(isShown: Boolean) {
     } else {
         gone()
     }
+}
+
+
+//glide extension
+fun GifImageView.loadImagesWithGlideExtCrop(url: String) {
+    GlideApp.with(this)
+        .asGif()
+        .load(url)
+        .centerCrop()
+        .error(R.drawable.ic_error_placeholder)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .placeholder(R.drawable.ic_place_holder)
+        .into(this)
+}
+
+fun GifImageView.loadImagesWithGlideExtFitCenter(url: String) {
+    GlideApp.with(this)
+        .asGif()
+        .load(url)
+        .fitCenter()
+        .error(R.drawable.ic_error_placeholder)
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .placeholder(R.drawable.ic_place_holder)
+        .into(this)
 }
 
 

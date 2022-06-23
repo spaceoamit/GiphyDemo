@@ -7,9 +7,7 @@ import com.bumptech.glide.Glide
 import com.giphy.gifdemo.R
 import com.giphy.gifdemo.database.models.FavoritesGifBean
 import com.giphy.gifdemo.databinding.ItemGifBinding
-import com.giphy.gifdemo.utils.alert
-import com.giphy.gifdemo.utils.negativeButton
-import com.giphy.gifdemo.utils.positiveButton
+import com.giphy.gifdemo.utils.*
 
 /**
  * @Author: Amit Patoliya
@@ -32,15 +30,8 @@ class FavoriteGifAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder){
             var url = favGifList[position].imageUrl
-            binding.apply {
-                Glide.with(root)
-                    .asGif()
-                    .load(url)
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_place_holder)
-                    .into(itemGifFile)
-            }
 
+            binding.itemGifFile.loadImagesWithGlideExtCrop(url)
 
             binding.imgFavorite.setImageResource(R.drawable.ic_favorite)
 
