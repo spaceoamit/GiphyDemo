@@ -36,6 +36,7 @@ class FavoriteGifAdapter (
                 Glide.with(root)
                     .asGif()
                     .load(url)
+                    .centerCrop()
                     .placeholder(R.drawable.ic_place_holder)
                     .into(itemGifFile)
             }

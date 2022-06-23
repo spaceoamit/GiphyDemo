@@ -7,12 +7,12 @@ import android.widget.ImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.giphy.gifdemo.R
 import com.giphy.gifdemo.database.AppDatabase
 import com.giphy.gifdemo.database.models.FavoritesGifBean
 
 import com.giphy.gifdemo.databinding.ItemGifBinding
+import com.giphy.gifdemo.di.GlideApp
 import com.giphy.gifdemo.models.Data
 import javax.inject.Inject
 
@@ -36,11 +36,15 @@ class TrendingGifAdapter @Inject constructor(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         with(holder){
-            var url = getItem(position)?.images?.original?.url
+            var url = getItem(position)?.images?.downsized?.url
+            var height = getItem(position)?.images?.downsized?.height
+            var width = getItem(position)?.images?.downsized?.width
             binding.apply {
-                Glide.with(root)
+                itemGifFile.setDimensions(height?:0,width?:0)
+                GlideApp.with(root)
                     .asGif()
                     .load(url)
+                    .fitCenter()
                     .placeholder(R.drawable.ic_place_holder)
                     .into(itemGifFile)
             }
@@ -89,15 +93,5 @@ class TrendingGifAdapter @Inject constructor(
         }
 
     }
-
-
-}
-
-
-
-private fun ImageView.setFavoriteImage(it: String, mydb: AppDatabase): Boolean {
-
-        return mydb.getFavoriteData().checkIsFavorite(id = it)
-
 
 }

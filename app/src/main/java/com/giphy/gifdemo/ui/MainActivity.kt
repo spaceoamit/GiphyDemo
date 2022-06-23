@@ -59,6 +59,8 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
 
+            // It will call api when search button click
+            //TODO needs to fix it letter on
             override fun onQueryTextChange(newText: String?): Boolean {
                 if(newText!=null && newText.trim().isEmpty()){
                     viewModel.getSearchingData("")
