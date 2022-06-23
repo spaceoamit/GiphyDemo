@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">GifDemo</string>
 
 
     <string name="giphy_api_key">hsDQkjTSySN6m5wQcMI4zpbd7KKiT29u</string>
