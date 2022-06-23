@@ -8,6 +8,7 @@ import com.giphy.gifdemo.adapter.FavoriteGifAdapter
 import com.giphy.gifdemo.databinding.FragmentFavoriteBinding
 import com.giphy.gifdemo.utils.invisible
 import com.giphy.gifdemo.utils.visible
+import com.giphy.gifdemo.utils.visibleIf
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,13 +46,11 @@ class FavoriteFragment : Fragment() {
         }
         binding.favoriteList.adapter = favGifAdapter
 
+
         viewModel.getAllFavGiphyGif().observe(viewLifecycleOwner){
 
-            if(it.isNotEmpty()){
-                binding.txtEmptyMessage.invisible()
-            }else{
-                binding.txtEmptyMessage.visible()
-            }
+            binding.emptyView.root.visibleIf(!it.isNotEmpty())
+
             favGifAdapter.setListData(it)
             favGifAdapter.notifyDataSetChanged()
 

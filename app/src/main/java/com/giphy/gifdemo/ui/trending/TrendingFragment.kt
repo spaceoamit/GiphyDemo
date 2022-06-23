@@ -6,12 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import com.giphy.gifdemo.R
 import com.giphy.gifdemo.adapter.BaseLoadStateAdapter
 import com.giphy.gifdemo.adapter.TrendingGifAdapter
 import com.giphy.gifdemo.databinding.FragmentTrendingBinding
@@ -70,28 +70,27 @@ class TrendingFragment : Fragment() {
                     is LoadState.Loading -> {
                         Log.e("TAG","Loading")
                         binding.progressLoading.visible()
-                        binding.txtNoResultMessage.invisible()
+
                     }
                     is LoadState.NotLoading -> {
-
                         Log.e("TAG","Not Loading")
-
                         binding.progressLoading.invisible()
-                        /*if (gifAdapter.itemCount < 1){
-                            binding.txtNoResultMessage.visible()
-                        }else
-                            binding.txtNoResultMessage.invisible()*/
+                        (binding.emptyView.root.findViewById<TextView>(R.id.textViewMessage)).text =
+                            context?.getString(R.string.no_data_search)
+                        binding.emptyView.root.visibleIf(
+                            loadstate.append.endOfPaginationReached
+                                    &&
+                                    gifAdapter.itemCount < 1
+                        )
+
                     }
                     is LoadState.Error -> {
 
                         Log.e("TAG","Error message")
                         binding.swipeToRefresh.isRefreshing = false
-                        binding.txtNoResultMessage.visible()
+                        binding.emptyView.root.visible()
                         binding.progressLoading.invisible()
-                        binding.txtNoResultMessage.apply {
-                            text = error?.toString()
-                            visible()
-                        }
+
                     }
 
                 }

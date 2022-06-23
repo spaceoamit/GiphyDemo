@@ -8,12 +8,18 @@
 
 
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <include
         android:layout_gravity="center"
-        android:id="@+id/txtNoResultMessage"
-        android:text="@string/no_data_search"
+        android:id="@+id/emptyView"
+        layout="@layout/view_empty"
+        android:visibility="gone"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 
     <ProgressBar
