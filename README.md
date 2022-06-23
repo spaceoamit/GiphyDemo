@@ -7,5 +7,7 @@ Used:
 - Paging3
 - Kotlin
 - MVVM
+- Retrofit
+- Glide
 
 
