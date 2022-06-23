@@ -19,3 +19,8 @@ Animated gif with lazyloading using paging3 library. used local database for fav
 
 # Screenshot
 <img src="/screens/screen1.png" height="400px"/> <img src="/screens/screen2.png" height="400px"/> 
+
+
+# Build for testing
+<a href="https://github.com/spaceoamit/GiphyDemo/tree/master/apk/giphydemo.apk" title="Download" download>Download</a>
+
