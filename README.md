@@ -19,5 +19,6 @@ Animated gif with lazyloading using paging3 library. used local database for fav
 
 # Screenshot
 
-
+![image description](GiphyDemo/blob/master/screens/screen2.png)
+![image description](relative/path/in/repository/to/image.svg)
 
