@@ -18,5 +18,4 @@ Animated gif with lazyloading using paging3 library. used local database for fav
 - Glide
 
 # Screenshot
-<img src="/screens/screen1.png" height="400px"/> 
-<img src="/screens/screen2.png" height="400px"/> 
+<img src="/screens/screen1.png" height="400px"/> <img src="/screens/screen2.png" height="400px"/> 
