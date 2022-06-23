@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">My Application</string>
+
+
+    <string name="giphy_api_key">hsDQkjTSySN6m5wQcMI4zpbd7KKiT29u</string>
+    <string name="search_title">Search</string>
+    <string name="no_data">No added yet</string>
+    <string name="no_data_search">No result found!!</string>
+    <string name="error_message">Something went wrong.</string>
+    <string name="retry">Retry</string>
+    <string name="waring_messsage">Warning</string>
+    <string name="remove_message">Are you sure you want to remove it from favorite?</string>
+</resources>
