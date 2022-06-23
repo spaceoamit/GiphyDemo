@@ -98,6 +98,7 @@ class TrendingFragment : Fragment() {
         viewModel.query.observe(viewLifecycleOwner) {
             GiphyDataSource.searchQuery = it
             gifAdapter.refresh()
+            Log.e("TAG", "Is it making issue for orientation survive")
         }
 
 
