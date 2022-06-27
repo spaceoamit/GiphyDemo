@@ -54,17 +54,14 @@ class MainActivity : AppCompatActivity() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                searchView.clearFocus()
-                viewModel.getSearchingData(query)
+                if (query != null) {
+                    viewModel.getSearchingData(query)
+                    searchView.clearFocus()
+                }
                 return true
             }
 
-            // It will call api when search button click
-            //TODO needs to fix it letter on
             override fun onQueryTextChange(newText: String?): Boolean {
-                if(newText!=null && newText.trim().isEmpty()){
-                    viewModel.getSearchingData("")
-                }
                 return true
             }
 

@@ -24,7 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class TrendingFragment : Fragment() {
 
@@ -38,7 +37,6 @@ class TrendingFragment : Fragment() {
 
     @Inject
     lateinit var gifAdapter: TrendingGifAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,19 +59,18 @@ class TrendingFragment : Fragment() {
     private fun setObservers() {
 
 
-
         lifecycleScope.launchWhenCreated {
             gifAdapter.loadStateFlow.collectLatest { loadstate ->
                 binding.swipeToRefresh.isRefreshing = false
 
                 when (loadstate.refresh) {
                     is LoadState.Loading -> {
-                        Log.e("TAG","Loading")
+                        Log.e("TAG", "Loading")
                         binding.progressLoading.visible()
 
                     }
                     is LoadState.NotLoading -> {
-                        Log.e("TAG","Not Loading")
+                        Log.e("TAG", "Not Loading")
                         binding.progressLoading.invisible()
                         (binding.emptyView.root.findViewById<TextView>(R.id.textViewMessage)).text =
                             context?.getString(R.string.no_data_search)
@@ -85,8 +82,7 @@ class TrendingFragment : Fragment() {
 
                     }
                     is LoadState.Error -> {
-
-                        Log.e("TAG","Error message")
+                        Log.e("TAG", "Error message")
                         binding.swipeToRefresh.isRefreshing = false
                         binding.emptyView.root.visible()
                         binding.progressLoading.invisible()
@@ -103,30 +99,20 @@ class TrendingFragment : Fragment() {
             }
         }
 
-
-        viewModel.query.observe(viewLifecycleOwner) {
+        viewModel.queryLiveData.observeIfDataChange(viewLifecycleOwner) {
             GiphyDataSource.searchQuery = it
             gifAdapter.refresh()
-            Log.e("TAG", "Is it making issue for orientation survive")
         }
-
-
-
     }
 
-
-
-
     private fun setListeners() {
-
         binding.trendingList.adapter = gifAdapter
         val footerAdapter = BaseLoadStateAdapter(gifAdapter)
         binding.trendingList.adapter = gifAdapter.withLoadStateFooter(footerAdapter)
 
         binding.swipeToRefresh.setOnRefreshListener {
             binding.swipeToRefresh.isRefreshing = false
-            if(requireActivity().isConnected) gifAdapter.refresh()
+            if (requireActivity().isConnected) gifAdapter.refresh()
         }
-
     }
 }

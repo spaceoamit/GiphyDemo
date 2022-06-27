@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.giphy.gifdemo.BuildConfig
 import com.giphy.gifdemo.database.AppDatabase
 import com.giphy.gifdemo.network.ApiService
+import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,16 +29,16 @@ object AppModule {
     @Provides
     fun provideBaseUrl() = BuildConfig.GIPHY_BASE_URL
 
-
     @Singleton
     @Provides
-    fun provideOkHttpClient() = if (BuildConfig.DEBUG){
+    fun provideOkHttpClient() = if (BuildConfig.DEBUG) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
+            .addInterceptor(OkHttpProfilerInterceptor())
             .addInterceptor(loggingInterceptor)
             .build()
-    }else{
+    } else {
         OkHttpClient
             .Builder()
             .build()
@@ -45,13 +46,11 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL:String): Retrofit = Retrofit.Builder()
+    fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl(BASE_URL)
         .client(okHttpClient)
         .build()
-
-
 
 
     @Provides
@@ -62,14 +61,12 @@ object AppModule {
     @Singleton
     @Provides
     fun provideAppDatabase(@ApplicationContext app: Context): AppDatabase =
-        Room.databaseBuilder(app,AppDatabase::class.java,"giphy_db")
+        Room.databaseBuilder(app, AppDatabase::class.java, "giphy_db")
             .allowMainThreadQueries()
             .build()
-
 
     @Singleton
     @Provides
     fun provideRoomDao(db: AppDatabase) = db.getFavoriteData()
-
 
 }

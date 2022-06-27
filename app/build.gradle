@@ -83,4 +83,7 @@ dependencies {
 
     // Lottie
     implementation 'com.airbnb.android:lottie:5.0.2'
+
+    // Request Profiler
+    implementation 'com.localebro:okhttpprofiler:1.0.8'
 }
