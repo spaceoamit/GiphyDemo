@@ -7,7 +7,6 @@ import com.giphy.gifdemo.network.ApiService
 import com.giphy.gifdemo.utils.CommonData.LIMIT
 import retrofit2.HttpException
 import java.io.IOException
-import java.lang.Exception
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -28,27 +27,27 @@ class GiphyDataSource @Inject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Data> {
         offset = params.key ?: 0
 
-        try{
+        try {
 
-            var response = if(searchQuery.isNotBlank()){
+            val response = if (searchQuery.isNotBlank()) {
                 apiService.getSearchResponse(offset = offset, searchText = searchQuery)
-            }else{
+            } else {
                 apiService.getTrendingResponse(offset = offset)
             }
             return if (response.isSuccessful && response.body() != null) {
 
-                var giphyListBean  = response.body()?.data
+                val giphyListBean = response.body()?.data
 
                 LoadResult.Page(
                     data = giphyListBean!!,
                     prevKey = if (offset > LIMIT) offset - LIMIT else null,
                     nextKey = if (giphyListBean.isNotEmpty()) offset + LIMIT else null
                 )
-            }else{
+            } else {
                 LoadResult.Error(Exception(response.message()))
             }
 
-        }catch (e: IOException) {
+        } catch (e: IOException) {
             if (e is UnknownHostException) {
                 return LoadResult.Error(Exception("No internet connection."))
             }
@@ -58,7 +57,8 @@ class GiphyDataSource @Inject constructor(
         }
 
     }
-    override fun getRefreshKey(state: PagingState<Int, Data>): Int? = 0
+
+    override fun getRefreshKey(state: PagingState<Int, Data>): Int = 0
 
 
 }
