@@ -14,6 +14,7 @@ import com.giphy.gifdemo.database.models.FavoritesGifBean
 import com.giphy.gifdemo.databinding.ItemGifBinding
 import com.giphy.gifdemo.di.GlideApp
 import com.giphy.gifdemo.models.Data
+import com.giphy.gifdemo.repository.GifDataRepository
 import com.giphy.gifdemo.utils.loadImagesWithGlideExtCrop
 import com.giphy.gifdemo.utils.loadImagesWithGlideExtFitCenter
 import javax.inject.Inject
@@ -24,8 +25,7 @@ import javax.inject.Inject
  * @Date: 21/06/22
  */
 
-class TrendingGifAdapter @Inject constructor(
-    private val appDatabase: AppDatabase
+class TrendingGifAdapter @Inject constructor(private val gifRepository:GifDataRepository
 ): PagingDataAdapter<Data, TrendingGifAdapter.ViewHolder>(DiffUtilCallBack()) {
 
     inner class ViewHolder(var binding: ItemGifBinding) : RecyclerView.ViewHolder(binding.root)
@@ -47,27 +47,23 @@ class TrendingGifAdapter @Inject constructor(
             }
             binding.itemGifFile.setDimensions(height?:0,width?:0)
 
-            getItem(position)?.id?.let { giphyUrlId ->
-                var isInFavorite = getItem(position)?.id?.let { appDatabase.getFavoriteData().checkIsFavorite(id = it) }
+            getItem(position)?.id?.let { id ->
                 binding.imgFavorite.apply {
-                    if(isInFavorite == true) setImageResource(R.drawable.ic_favorite)
+                    if(gifRepository.isFavorite(id)) setImageResource(R.drawable.ic_favorite)
                     else setImageResource(R.drawable.ic_favorite_border)
                 }
             }
 
             binding.imgFavorite.setOnClickListener {
-                    getItem(position)?.id?.let{
+                    getItem(position)?.id?.let{ id ->
 
-                        var isInFavorite = getItem(position)?.id?.let { appDatabase.getFavoriteData().checkIsFavorite(id = it) }
-
-                        if(isInFavorite == true){
-                            appDatabase.getFavoriteData().delete(it)
+                        if(gifRepository.isFavorite(id)){
+                            gifRepository.removeFavorite(id)
                             binding.imgFavorite.setImageResource(R.drawable.ic_favorite_border)
                         }else{
-
                             url?.let { url ->
-                                var favoriteBean = FavoritesGifBean(id = it, imageUrl = url)
-                                appDatabase.getFavoriteData().addToFavorite(favoriteBean)
+                                var favoriteBean = FavoritesGifBean(id = id, imageUrl = url)
+                                gifRepository.setFavorite(favoriteBean)
                                 binding.imgFavorite.setImageResource(R.drawable.ic_favorite)
                             }
                         }

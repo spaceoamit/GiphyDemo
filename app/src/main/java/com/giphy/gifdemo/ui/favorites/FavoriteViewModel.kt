@@ -4,12 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.giphy.gifdemo.database.AppDatabase
 import com.giphy.gifdemo.database.models.FavoritesGifBean
+import com.giphy.gifdemo.repository.GifDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
-    private val appDatabase: AppDatabase
+    private val appDatabase: AppDatabase,
+    private val gifDataRepository: GifDataRepository
 ) : ViewModel() {
 
 
@@ -18,7 +20,7 @@ class FavoriteViewModel @Inject constructor(
     }
 
     fun removeFromFavorite(id:String) {
-        appDatabase.getFavoriteData().delete(id)
+        gifDataRepository.removeFavorite(id)
     }
 
 }
