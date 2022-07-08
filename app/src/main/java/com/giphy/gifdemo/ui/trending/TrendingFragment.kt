@@ -60,8 +60,6 @@ class TrendingFragment : Fragment() {
 
     private fun setObservers() {
 
-
-
         lifecycleScope.launchWhenCreated {
             gifAdapter.loadStateFlow.collectLatest { loadstate ->
                 binding.swipeToRefresh.isRefreshing = false

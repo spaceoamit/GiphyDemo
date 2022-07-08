@@ -8,6 +8,7 @@ import androidx.paging.cachedIn
 import com.giphy.gifdemo.network.ApiService
 import com.giphy.gifdemo.paging.GiphyDataSource
 import com.giphy.gifdemo.repository.GifDataRepository
+import com.giphy.gifdemo.utils.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -19,8 +20,8 @@ class TrendingViewModel @Inject constructor(
 
     private var pageConfig = PagingConfig(pageSize = 10, maxSize = 100, enablePlaceholders = false)
 
-    private val _query: MutableLiveData<String> = MutableLiveData()
-    val query: LiveData<String>
+    private val _query: SingleLiveEvent<String> = SingleLiveEvent()
+    val query: SingleLiveEvent<String>
         get() = _query
 
 
