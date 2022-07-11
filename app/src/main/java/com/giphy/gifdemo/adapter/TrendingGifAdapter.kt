@@ -25,7 +25,8 @@ import javax.inject.Inject
  * @Date: 21/06/22
  */
 
-class TrendingGifAdapter @Inject constructor(private val gifRepository:GifDataRepository
+class TrendingGifAdapter @Inject constructor(
+    private val gifRepository:GifDataRepository
 ): PagingDataAdapter<Data, TrendingGifAdapter.ViewHolder>(DiffUtilCallBack()) {
 
     inner class ViewHolder(var binding: ItemGifBinding) : RecyclerView.ViewHolder(binding.root)
